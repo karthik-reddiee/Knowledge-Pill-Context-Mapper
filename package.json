@@ -1,0 +1,133 @@
+{
+  "name": "knowledge-pill",
+  "displayName": "Knowledge Pill",
+  "description": "Portable AI session memory for developers",
+  "version": "0.1.0",
+  "publisher": "knowledge-pill",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Debuggers"
+  ],
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/knowledge-pill/vscode-extension"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "knowledge-pill.exportKnowledgePill",
+        "title": "Knowledge Pill: Export Knowledge Pill",
+        "description": "Export current project state as portable AI memory"
+      },
+      {
+        "command": "knowledge-pill.scanProject",
+        "title": "Knowledge Pill: Scan Project",
+        "description": "Scan the current workspace and generate a project snapshot"
+      },
+      {
+        "command": "knowledge-pill.startTracking",
+        "title": "Knowledge Pill: Start Tracking",
+        "description": "Start tracking workspace activity"
+      },
+      {
+        "command": "knowledge-pill.stopTracking",
+        "title": "Knowledge Pill: Stop Tracking",
+        "description": "Stop tracking workspace activity"
+      },
+      {
+        "command": "knowledge-pill.getStatus",
+        "title": "Knowledge Pill: Get Status",
+        "description": "Show current tracking status"
+      },
+      {
+        "command": "knowledge-pill.generateKnowledge",
+        "title": "Knowledge Pill: Generate Knowledge"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "knowledge-pill.exportKnowledgePill",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "knowledge-pill.scanProject",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "knowledge-pill.startTracking",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "knowledge-pill.stopTracking",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "knowledge-pill.getStatus",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "knowledge-pill.generateKnowledge",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Knowledge Pill",
+      "properties": {
+        "knowledge-pill.inactivityTimeout": {
+          "type": "number",
+          "default": 300,
+          "description": "Time in seconds before detecting AI inactivity (default: 5 minutes)"
+        },
+        "knowledge-pill.excludePatterns": {
+          "type": "array",
+          "default": [
+            "node_modules",
+            ".git",
+            "dist",
+            "build",
+            ".DS_Store"
+          ],
+          "description": "Patterns to exclude from project scanning"
+        },
+        "knowledge-pill.autoExport": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically export Knowledge Pill on inactivity detection"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "webpack --mode production",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "lint": "eslint src",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "ts-loader": "^9.4.0",
+    "typescript": "^5.0.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0"
+  },
+  "dependencies": {
+    "archiver": "^6.0.0"
+  }
+}
